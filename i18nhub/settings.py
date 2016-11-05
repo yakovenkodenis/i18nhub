@@ -32,6 +32,9 @@ INSTALLED_APPS = [
 
     # Rest Framework
     'rest_framework',
+
+    # Application modules
+    'home',
 ]
 
 MIDDLEWARE_CLASSES = [
