@@ -1,0 +1,69 @@
+{
+  "name": "i18nhub-frontend",
+  "version": "1.0.0",
+  "description": "The front-end app for the i18nhub project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --env.dev --content-base app/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yakovenkodenis/i18nhub.git"
+  },
+  "keywords": [
+    "i18n",
+    "cdn",
+    "service",
+    "react",
+    "django",
+    "js",
+    "api",
+    "spa"
+  ],
+  "author": "Denis Yakovenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yakovenkodenis/i18nhub/issues"
+  },
+  "homepage": "https://github.com/yakovenkodenis/i18nhub#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015-webpack": "^6.4.3",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-react-optimize": "^1.0.1",
+    "babel-preset-stage-0": "^6.16.0",
+    "cpy-cli": "^1.0.1",
+    "css-loader": "^0.25.0",
+    "exports-loader": "^0.6.3",
+    "extract-loader": "0.0.2",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "ghooks": "^1.3.2",
+    "imports-loader": "^0.6.5",
+    "json-loader": "^0.5.4",
+    "nib": "^1.1.2",
+    "opt-cli": "^1.5.1",
+    "redux-logger": "^2.7.4",
+    "rimraf": "^2.5.4",
+    "rupture": "^0.6.2",
+    "style-loader": "^0.13.1",
+    "stylus-loader": "^2.3.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-validator": "^2.2.9"
+  },
+  "dependencies": {
+    "axios": "^0.15.2",
+    "lodash": "^4.16.6",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^4.0.0-alpha.5",
+    "react-router-redux": "^4.0.0-rc.2",
+    "redux": "^3.6.0",
+    "redux-form": "^6.2.0",
+    "redux-thunk": "^2.1.0"
+  }
+}
