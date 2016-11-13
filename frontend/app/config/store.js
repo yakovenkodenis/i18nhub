@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 
 
-let middlawares = [
+let middlewares = [
     thunk
 ];
 
