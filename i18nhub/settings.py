@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     # Rest Framework
     'rest_framework',
 
+    # CORS
+    'corsheaders',
+
     # Application modules
     'home',
 ]
@@ -47,6 +50,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'i18nhub.urls'
@@ -119,6 +124,12 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=14)
 }
 
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:8000',
+#     'localhost:8888',
+# )
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

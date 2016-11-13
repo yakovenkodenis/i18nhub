@@ -7,6 +7,8 @@ import MainLayout from './layouts/main';
 import Home from './components/home';
 import About from './components/about';
 
+import ApiTest from './components/api-test';
+
 import store from './config/store';
 import reducers from './reducers';
 
@@ -26,6 +28,8 @@ const App = () => (
                     <li><Link to='/about'>About</Link></li>
                 </ul>
                 <hr />
+
+                <ApiTest />
 
                 <Match exactly pattern='/' component={Home} />
                 <Match pattern='/about' component={About} />
