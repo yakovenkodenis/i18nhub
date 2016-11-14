@@ -3,17 +3,9 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
+import renderField from '../../components/render-field';
 import { signIn } from '../../actions/auth-actions';
 
-const renderField = ({ input, label, type, classFunc, meta: { touched, error } }) => (
-    <div className={`form-group ${classFunc({touched, error})}`}>
-        <label>{label}</label>
-        <input {...input} type={type} placeholder={label} />
-        <div className='text-help'>
-            { touched && error ? error : '' }
-        </div>
-    </div>
-);
 
 class SignInContainer extends Component {
     constructor(props, context) {
