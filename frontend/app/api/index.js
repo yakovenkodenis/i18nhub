@@ -8,12 +8,12 @@ export default class I18NHubAPI {
         this.baseURL = 'http://localhost:8000';
         this.baseAPIurl = `${this.baseURL}/api/v1`;
         this.jwt = localStorage.getItem(Auth.JWT_KEY) || '';
-        this._createAxiosInstance(this.jwt);
+        this._initAxiosInstance(this.jwt);
     }
 
     set token(token) {
         this.jwt = token;
-        this._createAxiosInstance(this.jwt);
+        this._initAxiosInstance(this.jwt);
         localStorage.setItem(Auth.JWT_KEY, this.jwt);
     }
 
@@ -47,7 +47,7 @@ export default class I18NHubAPI {
         }
     }
 
-    _createAxiosInstance(jwt) {
+    _initAxiosInstance(jwt) {
         this.axios = axios.create({
             baseURL: this.baseAPIurl,
             headers: {

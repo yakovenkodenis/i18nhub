@@ -3,6 +3,8 @@ import { Auth } from '../config/constants';
 import I18NHubAPI from '../api';
 
 
+const Api = new I18NHubAPI();
+
 export const signInWithJWT = token => ({
     type: Auth.SIGN_IN,
     payload: {
@@ -28,7 +30,7 @@ export const signUpError = error => ({
     }
 });
 
-export const signOut = ({
+export const signOut = () => ({
     type: Auth.SIGN_OUT
 });
 
@@ -46,8 +48,8 @@ export const verifySignedInError = error => ({
     }
 });
 
-export const signIn = (username, password) => dispatch => {
-    I18NHubAPI.auth
+export const signIn = (username, password) => dispatch =>
+    Api.auth
         .getJWT(username, password)
         .then(response => {
             dispatch(signInWithJWT(response.data.token))
@@ -55,12 +57,11 @@ export const signIn = (username, password) => dispatch => {
         .catch(e => {
             dispatch(signInError(e))
         });
-}
 
 export const signUp = (
         email, username, first_name, last_name, password
-    ) => dispatch => {
-    I18NHubAPI.auth
+    ) => dispatch =>
+    Api.auth
         .signup(email, username, first_name, last_name, password)
         .then(response => {
             dispatch(signUpSync())
@@ -68,10 +69,9 @@ export const signUp = (
         .catch(e => {
             dispatch(signUpError(e))
         });
-}
 
-export const isSignedIn = jwt => dispatch => {
-    I18NHubAPI.auth
+export const isSignedIn = jwt => dispatch =>
+    Api.auth
         .verifyJWT(jwt)
         .then(response => {
             if (response.data.token) {
@@ -83,4 +83,3 @@ export const isSignedIn = jwt => dispatch => {
         .catch(e => {
             dispatch(verifySignedInError(e))
         });
-}

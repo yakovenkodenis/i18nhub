@@ -1,47 +1,58 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Match, Link, Miss } from 'react-router';
+import { BrowserRouter, Match } from 'react-router';
 
 import MainLayout from '../../layouts/main';
 import Home from '../home';
-import About from '../about';
-import MatchWhenAuthorized from '../../containers/match-when-authorized';
 
-import ApiTest from '../api-test';
+import Dashboard from '../../containers/dashboard';
+import SignInContainer from '../../containers/signin';
 
+import I18NHubAPI from '../../api';
 import { isSignedIn } from '../../actions';
 
 
-const App = (props) => (
-    <BrowserRouter>
-        {({ router }) => (
-            <MainLayout>
-                {props.auth.signedIn ? (
-                    <p>
-                        Welcome! {' '}
-                        <button onClick={() => router.transitionTo('/')}>Sign out</button>
-                    </p>
-                ) : (
-                  <p>You are not logged in.</p>
-                )}
+class App extends Component {
 
-                <hr />
-                <ul>
-                    <li><Link to='/'>Home</Link></li>
-                    <li><Link to='/about'>About</Link></li>
-                </ul>
-                <hr />
+    constructor(props, context) {
+        super(props, context);
 
-                <ApiTest />
+        this.I18NHubAPI = new I18NHubAPI();
 
-                <Match exactly pattern='/' component={Home} />
-                <Match pattern='/about' component={About} />
-                {/* <MatchWhenAuthorized component={} /> */}
-                <Miss component={Home} />
-            </MainLayout>
-        )}
-    </BrowserRouter>
-);
+        this.state = {
+            redirectToLogin: false
+        }
+    }
+
+    componentWillMount() {
+        this.I18NHubAPI.auth
+            .verifyJWT(this.props.auth.jwt)
+            .then(response => {
+                if (response.data.token) {
+                    console.log('SUCCESSFUL VERIFICATION');
+                    this.setState({ redirectToLogin: true });
+                }
+            });
+    }
+
+    render() {
+        return (
+            <BrowserRouter>
+                <MainLayout>
+                    {
+                        this.props.auth.redirectToLogin
+                        && <Redirect to={{
+                                pathname: '/signin',
+                                state: { from: this.props.location.state.pathname }
+                            }} />
+                    }
+                    <Match exactly pattern='/' component={Home} />
+                    <Match pattern='/signin' component={SignInContainer} />
+                </MainLayout>
+            </BrowserRouter>
+        );
+    }
+}
 
 const mapStateToProps = (state) => ({
     auth: state.auth

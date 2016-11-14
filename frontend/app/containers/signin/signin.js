@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-import { signIn } from '../../actions';
+import { signIn } from '../../actions/auth-actions';
 
+const renderField = ({ input, label, type, classFunc, meta: { touched, error } }) => (
+    <div className={`form-group ${classFunc({touched, error})}`}>
+        <label>{label}</label>
+        <input {...input} type={type} placeholder={label} />
+        <div className='text-help'>
+            { touched && error ? error : '' }
+        </div>
+    </div>
+);
 
 class SignInContainer extends Component {
     constructor(props, context) {
         super(props, context);
 
-        state = {
+        this.state = {
             redirectToReferrer: false
         }
     }
 
     onSubmit({ username, password }) {
+        console.log('onSubmit!!!', this.props)
         this.props.signIn(username, password)
             .then(() => this.setState({ redirectToReferrer: true }));
     }
@@ -28,34 +39,32 @@ class SignInContainer extends Component {
             fields: { username, password }, handleSubmit
         } = this.props;
 
-        const { from } = this.props.location.state || '/'
-        const { redirectToReferrer } = this.state
+        const { from } = this.props.location.state || '/';
+        const { redirectToReferrer } = this.state;
 
         return (
-            {redirectToReferrer && (
-                <Redirect to={from || '/'}/>
-            )}
-            {from && (<form onSubmit={handleSubmit(::this.onSubmit)} className='signin-form'>
-                <h3>Sign In</h3>
-                <div className={`form-group ${this.addDangerClassToInput(username)}`}>
-                    <label>Username</label>
-                    <input type='text' className='form-control' {...username} />
-                    <div className='text-help'>
-                        {username.touched && username.error ? username.error : ''}
-                    </div>
-                </div>
-                <div className={`form-group ${this.addDangerClassToInput(password)}`}>
-                    <label>Password</label>
-                    <input type='password' className='form-control' {...password} />
-                    <div className='text-help'>
-                        {password.touched && password.error ? password.error : ''}
-                    </div>
-                </div>
-                <button type='submit' className='btn btn-primary pad-5'>
-                    Sign In
-                </button>
-            </form>
-            )}
+            <div>
+                { redirectToReferrer && <Redirect to={from || '/'}/> }
+                { from && (<form onSubmit={handleSubmit(::this.onSubmit)} className='signin-form'>
+                    <h3>Sign In</h3>
+                    <Field
+                        name='username'
+                        component={renderField}
+                        type='text'
+                        label='Username'
+                        classFunc={this.addDangerClassToInput} />
+                    <Field
+                        name='password'
+                        component={renderField}
+                        type='password'
+                        label='Password'
+                        classFunc={this.addDangerClassToInput} />
+                    <button type='submit' className='btn btn-primary pad-5'>
+                        Sign In
+                    </button>
+                </form>
+                )}
+            </div>
         );
     }
 }
@@ -74,8 +83,13 @@ const validate = ({ username, password }) => {
     return errors;
 }
 
-export default reduxForm({
+SignInContainer = reduxForm({
     form: 'SignInForm',
     fields: ['username', 'password'],
     validate
-}, null, { signIn })(SignInContainer);
+})(SignInContainer);
+
+export default connect(
+    null,
+    { signIn }
+)(SignInContainer);
