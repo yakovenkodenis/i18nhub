@@ -1,18 +1,20 @@
 import axios from 'axios';
 
+import { Auth } from '../config/constants';
+
 
 export default class I18NHubAPI {
     constructor() {
         this.baseURL = 'http://localhost:8000';
         this.baseAPIurl = `${this.baseURL}/api/v1`;
-        this.jwt = localStorage.getItem('i18nhub_jwt') || '';
+        this.jwt = localStorage.getItem(Auth.JWT_KEY) || '';
         this._createAxiosInstance(this.jwt);
     }
 
     set token(token) {
         this.jwt = token;
         this._createAxiosInstance(this.jwt);
-        localStorage.setItem('i18nhub_jwt', this.jwt);
+        localStorage.setItem(Auth.JWT_KEY, this.jwt);
     }
 
     get auth() {

@@ -16,7 +16,7 @@ urlpatterns = [
     # JWT authentication
     url(r'^api-token-auth/', obtain_jwt_token, name='api-token-auth'),
     url(r'^api-token-refresh/', refresh_jwt_token, name='api-token-refresh'),
-    url(r'^api/-token-verify/', verify_jwt_token, name='api-token-verify'),
+    url(r'^api-token-verify/', verify_jwt_token, name='api-token-verify'),
 
     # API
     url(r'^api/v1/', include('home.urls', namespace='api-v1')),
